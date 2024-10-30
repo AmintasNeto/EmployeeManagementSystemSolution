@@ -21,7 +21,7 @@ namespace ClientLibrary.Services.Implementations
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/register", user);
             if (!result.IsSuccessStatusCode) return new GeneralResponse(false, "Error during creation ocurred");
 
-            return await result.Content.ReadFromJsonAsync<GeneralResponse>()!;
+            return (await result.Content.ReadFromJsonAsync<GeneralResponse>())!;
         }
 
         public Task<LoginResponse> RefreshTokenAsync(RefreshToken token)
@@ -34,9 +34,9 @@ namespace ClientLibrary.Services.Implementations
         {
             var httpClient = getHttpClient.GetPublicHttpClient();
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/login", user);
-            if (!result.IsSuccessStatusCode) return new LoginResponse(false, "Error during creation ocurred");
+            if (!result.IsSuccessStatusCode) return new LoginResponse(false, "Error during login ocurred");
 
-            return await result.Content.ReadFromJsonAsync<LoginResponse>()!;
+            return (await result.Content.ReadFromJsonAsync<LoginResponse>())!;
         }
 
         public async Task<WeatherForecast[]> GetWeatherForecast()

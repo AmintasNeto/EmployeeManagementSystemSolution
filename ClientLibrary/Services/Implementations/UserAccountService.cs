@@ -44,8 +44,8 @@ namespace ClientLibrary.Services.Implementations
 
         public async Task<WeatherForecast[]> GetWeatherForecast()
         {
-            var httpClient = getHttpClient.GetPublicHttpClient();
-            var result = await httpClient.GetFromJsonAsync<WeatherForecast[]>($"api/weatherforecast");
+            var httpClient = await getHttpClient.GetPrivateHttpClient();
+            var result = await httpClient.GetFromJsonAsync<WeatherForecast[]>("api/weatherforecast");
             return result!;
         }
     }

@@ -26,7 +26,7 @@ namespace ClientLibrary.Helpers
 
                 string token = string.Empty;
                 try { token = request.Headers.Authorization!.Parameter!; }
-                catch (Exception) { }
+                catch { }
 
                 var deserealizedToken = Serializations.DeserializeJsonString<UserSession>(stringToken);
                 if (deserealizedToken == null) return result; 

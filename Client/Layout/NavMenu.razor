@@ -6,7 +6,7 @@
         <div class="top-row ps-3 navbar navbar-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="">
-                    Welcome, @context.User.Identity!.Name
+                    Welcome, @shortName
                 </a>
                 <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
                     <span class="navbar-toggler-icon"></span>
@@ -82,6 +82,15 @@
 </AuthorizeView>
 
 @code {
+    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+    private string shortName = null!;
+
+    protected async override Task OnInitializedAsync()
+    {
+        string[] fullname = (await AuthenticationState).User.Identity!.Name!.Split(" ");
+        shortName = fullname.First() + " " + fullname.Last();
+    }
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;

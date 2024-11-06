@@ -58,7 +58,7 @@
 
     protected override void OnInitialized()
     {
-        allState.GeneralDepartmentAction += StateHasChanged;
+        allState.Action += StateHasChanged;
     }
 
     void OpenDialog()
@@ -68,6 +68,6 @@
 
     public void Dispose()
     {
-        allState.GeneralDepartmentAction -= StateHasChanged;
+        allState.Action -= StateHasChanged;
     }
 }

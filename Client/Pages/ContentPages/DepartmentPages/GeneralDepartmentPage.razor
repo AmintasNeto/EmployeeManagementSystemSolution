@@ -1,8 +1,6 @@
-﻿@using BaseLibrary.Entities
-@using Client.ApplicationStates
-@implements IDisposable
-@inject DepartmentState departmentState
-@if(departmentState.ShowGeneralDepartment)
+﻿@implements IDisposable
+
+@if(allState.ShowGeneralDepartment)
 {
     <div class="container mt-5">
         <div class="row">
@@ -60,7 +58,7 @@
 
     protected override void OnInitialized()
     {
-        departmentState.GeneralDepartmentAction += StateHasChanged;
+        allState.GeneralDepartmentAction += StateHasChanged;
     }
 
     void OpenDialog()
@@ -70,6 +68,6 @@
 
     public void Dispose()
     {
-        departmentState.GeneralDepartmentAction -= StateHasChanged;
+        allState.GeneralDepartmentAction -= StateHasChanged;
     }
 }

@@ -25,7 +25,7 @@ namespace ServerLibrary.Repositories.Implementations
 
         public async Task<GeneralResponse> Insert(Country item)
         {
-            if (!await CheckName(item.Name!)) return new(false, "Department already created");
+            if (!await CheckName(item.Name)) return new(false, "Department already created");
             appDbContext.Countries.Add(item);
             await Commit();
             return Success();

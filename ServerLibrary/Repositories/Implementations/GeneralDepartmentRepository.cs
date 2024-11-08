@@ -1,5 +1,4 @@
-﻿
-using BaseLibrary.Entities;
+﻿using BaseLibrary.Entities;
 using BaseLibrary.Responses;
 using Microsoft.EntityFrameworkCore;
 using ServerLibrary.Data;
@@ -25,7 +24,7 @@ namespace ServerLibrary.Repositories.Implementations
 
         public async Task<GeneralResponse> Insert(GeneralDepartment item)
         {
-            if (!await CheckName(item.Name!)) return new(false, "Department already created");
+            if (!await CheckName(item.Name)) return new GeneralResponse(false, "General Department already created");
             appDbContext.GeneralDepartments.Add(item);
             await Commit();
             return Success();

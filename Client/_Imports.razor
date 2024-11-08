@@ -17,6 +17,9 @@
 @using ClientLibrary.Services.Contracts
 @using Syncfusion.Blazor.Popups
 
+@using Client.Pages.OtherPages.AdministrationPages
+@using Client.Pages.ContentPages.DepartmentPages
+
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager NavManager
 
@@ -26,12 +29,12 @@
 
 @inject SfDialogService dialogService
 
-@inject IGenericServicesInterface<GeneralDepartment> generalDepartment
-@inject IGenericServicesInterface<Department> department
-@inject IGenericServicesInterface<Branch> branch
+@inject IGenericServicesInterface<GeneralDepartment> generalDepartmentService
+@inject IGenericServicesInterface<Department> departmentService
+@inject IGenericServicesInterface<Branch> branchService
 
-@inject IGenericServicesInterface<Country> country
-@inject IGenericServicesInterface<City> city
-@inject IGenericServicesInterface<Town> town
+@inject IGenericServicesInterface<Country> countryService
+@inject IGenericServicesInterface<City> cityService
+@inject IGenericServicesInterface<Town> townService
 
-@inject IGenericServicesInterface<Employee> employee
+@inject IGenericServicesInterface<Employee> employeeService

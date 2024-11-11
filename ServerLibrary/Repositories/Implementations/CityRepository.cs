@@ -10,10 +10,10 @@ namespace ServerLibrary.Repositories.Implementations
     {
         public async Task<GeneralResponse> DeleteByID(int id)
         {
-            var dep = await appDbContext.Cities.FindAsync(id);
-            if (dep is null) return NotFound();
+            var city = await appDbContext.Cities.FindAsync(id);
+            if (city is null) return NotFound();
 
-            appDbContext.Cities.Remove(dep);
+            appDbContext.Cities.Remove(city);
             await Commit();
             return Success();
         }
@@ -32,9 +32,9 @@ namespace ServerLibrary.Repositories.Implementations
 
         public async Task<GeneralResponse> Update(City item)
         {
-            var dep = await appDbContext.Cities.FindAsync(item.Id);
-            if (dep is null) return NotFound();
-            dep.Name = item.Name;
+            var city = await appDbContext.Cities.FindAsync(item.Id);
+            if (city is null) return NotFound();
+            city.Name = item.Name;
             await Commit();
             return Success();
         }

@@ -1,6 +1,6 @@
 ﻿@implements IDisposable
 
-@if(allState.ShowGeneralDepartment)
+@if(allState.ShowDepartment)
 {
     <div class="container mt-5">
         <div class="row">
@@ -20,18 +20,20 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Id</th>
                                         <th scope="col">General Department</th>
+                                        <th scope="col">Department</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(GeneralDepartments is not null)
+                                    @if(Departments is not null)
                                     {
                                         int count = 1;
-                                        foreach(var item in GeneralDepartments)
+                                        foreach(var item in Departments)
                                         {
                                             <tr>
                                                 <th scope="row">@count</th>
                                                 <td>@item.Id</td>
+                                                <td>@item.GeneralDepartment!.Name</td>
                                                 <td>@item.Name</td>
                                                 <td>
                                                     <i class="bi bi-pencil text-info" id="cursorStyle" @onclick="()=>EditClicked(item)"></i>
@@ -44,7 +46,7 @@
                                     else
                                     {
                                         <tr>
-                                            <td colspan="4"><div class="alert alert-info text-center">No General Department Added Yet!</div></td>
+                                            <td colspan="4"><div class="alert alert-info text-center">No Department Added Yet!</div></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -57,25 +59,33 @@
     </div>
 }
 
-<GeneralDepartmentDialog @ref="generalDepartmentDialog" 
+<DepartmentDialog @ref="departmentDialog" 
                         HandleSaveOperationEvent="HandleSaveOperationEvent"
-                        GeneralDepartment="GeneralDepartment"/>
+                        Department="Department"
+                        GeneralDepartments="GeneralDepartments" />
 
 <style>
-    .cursorStyle {
+    cursorStyle {
         cursor: pointer;
     }
 </style>
 @code {
-    GeneralDepartmentDialog generalDepartmentDialog;
-    GeneralDepartment GeneralDepartment = new();
+    DepartmentDialog? departmentDialog;
+    Department Department = new();
     public string Title { get; set; } = "Add";
     public List<GeneralDepartment> GeneralDepartments { get; set; } = new();
+    public List<Department> Departments { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
+        await GetDepartments();
         await GetGeneralDepartments();
         allState.Action += StateHasChanged;
+    }
+
+    private async Task GetDepartments()
+    {
+        Departments = await departmentService.GetAll(Constants.DepartmentBaseUrl);
     }
 
     private async Task GetGeneralDepartments()
@@ -85,49 +95,56 @@
 
     void OpenDialog()
     {
-        generalDepartmentDialog?.OpenDialog();
+        departmentDialog?.OpenDialog();
+    }
+
+    void AddButtonClicked()
+    {
+        departmentDialog!.Title = "Add";
+        Department = new();
+        OpenDialog();
     }
 
     // Add or Update
-    private async Task HandleSaveOperationEvent(GeneralDepartment generalDepartment)
+    private async Task HandleSaveOperationEvent(Department department)
     {
         bool successCheck = false;
-        if (generalDepartment.Id > 0)
+        if (department.Id > 0)
         {
-            var result = await generalDepartmentService.Update(generalDepartment, Constants.GeneralDepartmentBaseUrl);
+            var result = await departmentService.Update(department, Constants.DepartmentBaseUrl);
             successCheck = await DisplayMessage(result.Flag, result.Message);
         } 
         else
         {
-            var result = await generalDepartmentService.Insert(generalDepartment, Constants.GeneralDepartmentBaseUrl);
+            var result = await departmentService.Insert(department, Constants.DepartmentBaseUrl);
             successCheck = await DisplayMessage(result.Flag, result.Message);
         }
         if(successCheck)
         {
-            GeneralDepartment = new();
-            await GetGeneralDepartments();
-            generalDepartmentDialog?.ChangeTitle("Add");
+            Department = new();
+            await GetDepartments();
+            departmentDialog?.ChangeTitle("Add");
         }
     }
 
     // Edit
-    private void EditClicked(GeneralDepartment dep)
+    private void EditClicked(Department dep)
     {
-        generalDepartmentDialog?.ChangeTitle("Edit");
-        GeneralDepartment = dep;
+        departmentDialog?.ChangeTitle("Update");
+        Department = dep;
         OpenDialog();
     }
 
     // Delete
-    private async Task DeleteClicked(GeneralDepartment dep)
+    private async Task DeleteClicked(Department dep)
     {
         bool confirm = await dialogService.ConfirmAsync($"Are you sure you wanna delete {dep.Name}?", "Confirm Delete");
         if (!confirm) return;
 
-        var response = await generalDepartmentService.DeleteById(dep.Id, Constants.GeneralDepartmentBaseUrl);
+        var response = await departmentService.DeleteById(dep.Id, Constants.DepartmentBaseUrl);
         if(await DisplayMessage(response.Flag, response.Message))
         {
-            await GetGeneralDepartments();
+            await GetDepartments();
         }
     }
 

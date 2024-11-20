@@ -1,4 +1,5 @@
 ﻿using BaseLibrary.DTOs;
+using BaseLibrary.Entities;
 using BaseLibrary.Responses;
 using ClientLibrary.Helpers;
 using ClientLibrary.Services.Contracts;
@@ -40,6 +41,38 @@ namespace ClientLibrary.Services.Implementations
             if (!result.IsSuccessStatusCode) return new LoginResponse(false, "Error during login ocurred");
 
             return (await result.Content.ReadFromJsonAsync<LoginResponse>())!;
+        }
+
+        public async Task<List<SystemRole>> GetRoles()
+        {
+            var httpClient = await getHttpClient.GetPrivateHttpClient();
+            var result = await httpClient.GetFromJsonAsync<List<SystemRole>>($"{AuthUrl}/roles");
+            return result!;
+        }
+
+        public async Task<List<ManageUser>> GetUsers()
+        {
+            var httpClient = await getHttpClient.GetPrivateHttpClient();
+            var result = await httpClient.GetFromJsonAsync<List<ManageUser>>($"{AuthUrl}/users");
+            return result!;
+        }
+
+        public async Task<GeneralResponse> UpdateUser(ManageUser user)
+        {
+            var httpClient = await getHttpClient.GetPrivateHttpClient();
+            var result = await httpClient.PutAsJsonAsync($"{AuthUrl}/update-user", user);
+            if (!result.IsSuccessStatusCode) return new GeneralResponse(false, "Error ocurred");
+
+            return await result.Content.ReadFromJsonAsync<GeneralResponse>()!;
+        }
+
+        public async Task<GeneralResponse> DeleteUser(int id)
+        {
+            var httpClient = await getHttpClient.GetPrivateHttpClient();
+            var result = await httpClient.DeleteAsync($"{AuthUrl}/delete-user/{id}");
+            if (!result.IsSuccessStatusCode) return new GeneralResponse(false, "Error ocurred");
+
+            return await result.Content.ReadFromJsonAsync<GeneralResponse>()!;
         }
     }
 }

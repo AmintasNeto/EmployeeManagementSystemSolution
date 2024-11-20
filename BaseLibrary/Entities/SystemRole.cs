@@ -1,6 +1,6 @@
 ﻿namespace BaseLibrary.Entities
 {
-    public class SystemRoles
+    public class SystemRole
     {
         public int Id { get; set; }
         public string? Name { get; set; }

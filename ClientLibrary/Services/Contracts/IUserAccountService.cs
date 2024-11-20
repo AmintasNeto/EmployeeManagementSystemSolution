@@ -1,10 +1,6 @@
 ﻿using BaseLibrary.DTOs;
+using BaseLibrary.Entities;
 using BaseLibrary.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientLibrary.Services.Contracts
 {
@@ -13,5 +9,9 @@ namespace ClientLibrary.Services.Contracts
         Task<GeneralResponse> CreateAcync(Register user);
         Task<LoginResponse> SignInAsync(Login user);
         Task<LoginResponse> RefreshTokenAsync(RefreshToken token);
+        Task<List<SystemRole>> GetRoles();
+        Task<List<ManageUser>> GetUsers();
+        Task<GeneralResponse> UpdateUser(ManageUser user);
+        Task<GeneralResponse> DeleteUser(int id);
     }
 }

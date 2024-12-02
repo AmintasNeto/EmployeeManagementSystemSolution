@@ -54,6 +54,7 @@ builder.Services.AddScoped<IGenerictRepositoryInterface<Country>,  CountryReposi
 builder.Services.AddScoped<IGenerictRepositoryInterface<Department>,  DepartmentRepository>();
 builder.Services.AddScoped<IGenerictRepositoryInterface<GeneralDepartment>,  GeneralDepartmentRepository>();
 builder.Services.AddScoped<IGenerictRepositoryInterface<Town>,  TownRepository>();
+builder.Services.AddScoped<IGenerictRepositoryInterface<Employee>,  EmployeeRepository>();
 
 builder.Services.AddCors(options =>
 {

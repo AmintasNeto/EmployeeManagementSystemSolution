@@ -50,20 +50,20 @@
 }
 
 <AddOrUpdateEmployeePage    @ref="addOrUpdateEmployee"
-                            Employee="Employee"
-                            ShowAddOrUpdateEmployee="ShowAddOrUpdatePage"
-                            NotifyParentFormCloseClicked="NotifyParentFormCloseClicked"
-                            Countries="DefaultCountries"
-                            Cities="SelectedCities"
-                            Towns="SelectedTowns"
-                            GeneralDepartments="DefaultGeneralDepartments"
-                            Departments="SelectedDepartments"
-                            Branches="SelectedBranches"
-                            HandleCountrySelectedEvent="HandleCountrySelectEvent"
-                            HandleCitySelectedEvent="HandleCitySelectEvent"
-                            HandleGeneralDepartmentSelectedEvent="HandleGeneralDepartmentSelectEvent"
-                            HandleDepartmentSelectedEvent="HandleDepartmentSelectEvent"
-                            HandleSaveEmployeeClickedEvent="HandleSaveEmployeeClickedEvent">
+Employee="Employee"
+ShowAddOrUpdateEmployee="ShowAddOrUpdatePage"
+NotifyParentFormCloseClicked="NotifyParentFormCloseClicked"
+Countries="DefaultCountries"
+Cities="SelectedCities"
+Towns="SelectedTowns"
+GeneralDepartments="DefaultGeneralDepartments"
+Departments="SelectedDepartments"
+Branches="SelectedBranches"
+HandleCountrySelectedEvent="HandleCountrySelectEvent"
+HandleCitySelectedEvent="HandleCitySelectEvent"
+HandleGeneralDepartmentSelectedEvent="HandleGeneralDepartmentSelectEvent"
+HandleDepartmentSelectedEvent="HandleDepartmentSelectEvent"
+HandleSaveEmployeeClickedEvent="HandleSaveEmployeeClickedEvent">
 </AddOrUpdateEmployeePage>
 
 @* <ContextMenu    @ref="contextMenu"
@@ -186,6 +186,19 @@
         contextMenu!.CloseContextMenu();
         ShowAddOrUpdatePage = true;
         ShowMainPage = false;
+    }
+
+    private async Task DeleteClicked() {
+        contextMenu!.CloseContextMenu();
+        bool confirm = await dialogService.ConfirmAsync($"Are you sure you wanna delete {SelectedEmployee.Name}?", "Confirm Delete");
+        if (!confirm) return;
+
+        var response = await employeeService.DeleteById(SelectedEmployee.Id, Constants.EmployeeBaseUrl);
+        var result = await DisplayMessage(response.Flag, response.Message);
+        if (result) {
+            SelectedEmployee = new();
+            await LoadEmployees();
+        }
     }
 
     private async Task<bool> DisplayMessage(bool flag, string message)

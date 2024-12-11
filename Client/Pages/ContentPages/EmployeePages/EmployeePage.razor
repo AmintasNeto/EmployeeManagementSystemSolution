@@ -30,6 +30,14 @@
                                     <GridColumn Field=@nameof(Employee.JobName) HeaderText="Job Name"></GridColumn>
                                     <GridColumn Field=@nameof(Employee.Branch.Name) HeaderText="Branch"></GridColumn>
                                     <GridColumn Field=@nameof(Employee.Town.Name) HeaderText="Town"></GridColumn>
+                                    <GridColumn HeaderText="Menu" HeaderTextAlign="TextAlign.Left">
+                                        <Template>
+                                            @{
+                                                var employee = (context as Employee);
+                                                <i class="bi bi-menu-down text-primary" id="cursorStyle" onclick="()=>ShowMenuPopUp(employee!)"></i>
+                                            }
+                                        </Template>
+                                    </GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </div>
@@ -57,6 +65,16 @@ HandleGeneralDepartmentSelectedEvent="HandleGeneralDepartmentSelectEvent"
 HandleDepartmentSelectedEvent="HandleDepartmentSelectEvent"
 HandleSaveEmployeeClickedEvent="HandleSaveEmployeeClickedEvent">
 </AddOrUpdateEmployeePage>
+
+@* <ContextMenu    @ref="contextMenu"
+HandleViewClicked="ViewClicked"
+HandleEditClicked="EditClicekd"
+HandleDeleteClicked="DeleteClicked"
+HandleAddVacationClicked="AddVacationClicked"
+HandleAddHealthClicked="AddHealthClicked"
+HandleAddOvertimeClicked="AddOvertimeClicked"
+HandleAddSanctionClicked="AddSanctionClicked">
+</ContextMenu> *@
 
 @code {
     AddOrUpdateEmployeePage? addOrUpdateEmployee;
@@ -133,6 +151,13 @@ HandleSaveEmployeeClickedEvent="HandleSaveEmployeeClickedEvent">
         ShowMainPage = true;
         ShowAddOrUpdatePage = false;
         await LoadEmployees();
+    }
+
+    ContextMenu? contextMenu;
+    public Employee SelectedEmployee { get; set; } = new();
+    void ShowMenuPopUp(Employee employee) {
+        SelectedEmployee = employee;
+        contextMenu!.OpenContextMenu();
     }
 
     private async Task<bool> DisplayMessage(bool flag, string message)

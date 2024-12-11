@@ -50,30 +50,30 @@
 }
 
 <AddOrUpdateEmployeePage    @ref="addOrUpdateEmployee"
-Employee="Employee"
-ShowAddOrUpdateEmployee="ShowAddOrUpdatePage"
-NotifyParentFormCloseClicked="NotifyParentFormCloseClicked"
-Countries="DefaultCountries"
-Cities="SelectedCities"
-Towns="SelectedTowns"
-GeneralDepartments="DefaultGeneralDepartments"
-Departments="SelectedDepartments"
-Branches="SelectedBranches"
-HandleCountrySelectedEvent="HandleCountrySelectEvent"
-HandleCitySelectedEvent="HandleCitySelectEvent"
-HandleGeneralDepartmentSelectedEvent="HandleGeneralDepartmentSelectEvent"
-HandleDepartmentSelectedEvent="HandleDepartmentSelectEvent"
-HandleSaveEmployeeClickedEvent="HandleSaveEmployeeClickedEvent">
+                            Employee="Employee"
+                            ShowAddOrUpdateEmployee="ShowAddOrUpdatePage"
+                            NotifyParentFormCloseClicked="NotifyParentFormCloseClicked"
+                            Countries="DefaultCountries"
+                            Cities="SelectedCities"
+                            Towns="SelectedTowns"
+                            GeneralDepartments="DefaultGeneralDepartments"
+                            Departments="SelectedDepartments"
+                            Branches="SelectedBranches"
+                            HandleCountrySelectedEvent="HandleCountrySelectEvent"
+                            HandleCitySelectedEvent="HandleCitySelectEvent"
+                            HandleGeneralDepartmentSelectedEvent="HandleGeneralDepartmentSelectEvent"
+                            HandleDepartmentSelectedEvent="HandleDepartmentSelectEvent"
+                            HandleSaveEmployeeClickedEvent="HandleSaveEmployeeClickedEvent">
 </AddOrUpdateEmployeePage>
 
 @* <ContextMenu    @ref="contextMenu"
-HandleViewClicked="ViewClicked"
-HandleEditClicked="EditClicekd"
-HandleDeleteClicked="DeleteClicked"
-HandleAddVacationClicked="AddVacationClicked"
-HandleAddHealthClicked="AddHealthClicked"
-HandleAddOvertimeClicked="AddOvertimeClicked"
-HandleAddSanctionClicked="AddSanctionClicked">
+                HandleViewClicked="ViewClicked"
+                HandleEditClicked="EditClicekd"
+                HandleDeleteClicked="DeleteClicked"
+                HandleAddVacationClicked="AddVacationClicked"
+                HandleAddHealthClicked="AddHealthClicked"
+                HandleAddOvertimeClicked="AddOvertimeClicked"
+                HandleAddSanctionClicked="AddSanctionClicked">
 </ContextMenu> *@
 
 @code {
@@ -158,6 +158,34 @@ HandleAddSanctionClicked="AddSanctionClicked">
     void ShowMenuPopUp(Employee employee) {
         SelectedEmployee = employee;
         contextMenu!.OpenContextMenu();
+    }
+
+    void EditClicked() {
+        addOrUpdateEmployee!.Employee.Id = SelectedEmployee.Id;
+
+        addOrUpdateEmployee!.EmployeeGroup1.Name = SelectedEmployee.Name;
+        addOrUpdateEmployee!.EmployeeGroup1.TelephoneNumber = SelectedEmployee.TelephoneNumber;
+        addOrUpdateEmployee!.EmployeeGroup1.FileNumber = SelectedEmployee.FileNumber;
+        addOrUpdateEmployee!.EmployeeGroup1.Address = SelectedEmployee.Address;
+        addOrUpdateEmployee!.EmployeeGroup1.Photo = SelectedEmployee.Photo ?? "";
+        addOrUpdateEmployee!.EmployeeGroup1.CivilId = SelectedEmployee.CivilId;
+
+        addOrUpdateEmployee!.EmployeeGroup2.JobName = SelectedEmployee.JobName;
+        addOrUpdateEmployee!.EmployeeGroup2.Other = SelectedEmployee.Other ?? "";
+
+        addOrUpdateEmployee!.GeneralDepartmentName = SelectedEmployee.Branch!.Department!.GeneralDepartment!.Name;
+        addOrUpdateEmployee!.DepartmentName = SelectedEmployee.Branch!.Department!.Name;
+        addOrUpdateEmployee!.BranchName = SelectedEmployee.Branch!.Name;
+
+        addOrUpdateEmployee!.CountryName = SelectedEmployee.Town!.City!.Country!.Name;
+        addOrUpdateEmployee!.CityName = SelectedEmployee.Town!.City!.Name;
+        addOrUpdateEmployee!.TownName = SelectedEmployee.Town!.Name;
+
+        addOrUpdateEmployee.Title = "Update";
+        SelectedEmployee = new();
+        contextMenu!.CloseContextMenu();
+        ShowAddOrUpdatePage = true;
+        ShowMainPage = false;
     }
 
     private async Task<bool> DisplayMessage(bool flag, string message)

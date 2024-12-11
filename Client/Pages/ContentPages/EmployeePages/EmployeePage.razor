@@ -66,6 +66,10 @@ HandleDepartmentSelectedEvent="HandleDepartmentSelectEvent"
 HandleSaveEmployeeClickedEvent="HandleSaveEmployeeClickedEvent">
 </AddOrUpdateEmployeePage>
 
+<EmployeeDetailPage EmployeeDetails="Employee"
+ShowDetailsPage="ShowDetailsPage"
+HandleDetailsPageCloseBtnClicked="HandleDetailsPageCloseBtnClicked" />
+
 @* <ContextMenu    @ref="contextMenu"
                 HandleViewClicked="ViewClicked"
                 HandleEditClicked="EditClicekd"
@@ -73,8 +77,7 @@ HandleSaveEmployeeClickedEvent="HandleSaveEmployeeClickedEvent">
                 HandleAddVacationClicked="AddVacationClicked"
                 HandleAddHealthClicked="AddHealthClicked"
                 HandleAddOvertimeClicked="AddOvertimeClicked"
-                HandleAddSanctionClicked="AddSanctionClicked">
-</ContextMenu> *@
+                HandleAddSanctionClicked="AddSanctionClicked"/>*@
 
 @code {
     AddOrUpdateEmployeePage? addOrUpdateEmployee;
@@ -160,7 +163,7 @@ HandleSaveEmployeeClickedEvent="HandleSaveEmployeeClickedEvent">
         contextMenu!.OpenContextMenu();
     }
 
-    void EditClicked() {
+    private void EditClicked() {
         addOrUpdateEmployee!.Employee.Id = SelectedEmployee.Id;
 
         addOrUpdateEmployee!.EmployeeGroup1.Name = SelectedEmployee.Name;
@@ -199,6 +202,20 @@ HandleSaveEmployeeClickedEvent="HandleSaveEmployeeClickedEvent">
             SelectedEmployee = new();
             await LoadEmployees();
         }
+    }
+
+    public bool ShowDetailsPage { get; set; } = false;
+    private void ViewClicked() {
+        Employee = SelectedEmployee;
+        contextMenu!.CloseContextMenu();
+        ShowDetailsPage = true;
+        ShowMainPage = false;
+        SelectedEmployee = new();
+    }
+
+    void HandleDetailsPageCloseBtnClicked() {
+        ShowDetailsPage = false;
+        ShowMainPage = true;
     }
 
     private async Task<bool> DisplayMessage(bool flag, string message)

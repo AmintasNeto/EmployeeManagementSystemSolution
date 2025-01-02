@@ -48,13 +48,25 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<IUserAccount, UserAccountRepository>();
 
-builder.Services.AddScoped<IGenerictRepositoryInterface<Branch>,  BranchRepository>();
+builder.Services.AddScoped<IGenerictRepositoryInterface<Town>,  TownRepository>();
 builder.Services.AddScoped<IGenerictRepositoryInterface<City>,  CityRepository>();
 builder.Services.AddScoped<IGenerictRepositoryInterface<Country>,  CountryRepository>();
+
+builder.Services.AddScoped<IGenerictRepositoryInterface<Branch>, BranchRepository>();
 builder.Services.AddScoped<IGenerictRepositoryInterface<Department>,  DepartmentRepository>();
 builder.Services.AddScoped<IGenerictRepositoryInterface<GeneralDepartment>,  GeneralDepartmentRepository>();
-builder.Services.AddScoped<IGenerictRepositoryInterface<Town>,  TownRepository>();
 builder.Services.AddScoped<IGenerictRepositoryInterface<Employee>,  EmployeeRepository>();
+
+builder.Services.AddScoped<IGenerictRepositoryInterface<Overtime>, OvertimeRepository>();
+builder.Services.AddScoped<IGenerictRepositoryInterface<OvertimeType>, OvertimeTypeRepository>();
+
+builder.Services.AddScoped<IGenerictRepositoryInterface<Sanction>, SanctionRepository>();
+builder.Services.AddScoped<IGenerictRepositoryInterface<SanctionType>, SanctionTypeRepository>();
+
+builder.Services.AddScoped<IGenerictRepositoryInterface<Vacation>, VacationRepository>();
+builder.Services.AddScoped<IGenerictRepositoryInterface<VacationType>, VacationTypeRepository>();
+
+builder.Services.AddScoped<IGenerictRepositoryInterface<Doctor>, DoctorRepository>();
 
 builder.Services.AddCors(options =>
 {

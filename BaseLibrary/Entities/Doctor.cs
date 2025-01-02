@@ -10,6 +10,6 @@ namespace BaseLibrary.Entities
         [Required] 
         public string MedicalDiagnose { get; set; } = string.Empty;
         [Required]
-        public string MedicalRecomendation { get; set; } = string.Empty;
+        public string MedicalRecommendation { get; set; } = string.Empty;
     }
 }

@@ -20,6 +20,10 @@
 @using Syncfusion.Blazor.Grids
 
 @using Client.Pages.OtherPages.AdministrationPages
+@using Client.Pages.OtherPages.DoctorPages
+@using Client.Pages.OtherPages.OvertimePages
+@using Client.Pages.OtherPages.SanctionPages
+@using Client.Pages.OtherPages.VacationPages
 @using Client.Pages.OtherPages
 @using Client.Pages.ContentPages.DepartmentPages
 @using Client.Pages.ContentPages.LocationPages
@@ -44,3 +48,14 @@
 @inject IGenericServicesInterface<Town> townService
 
 @inject IGenericServicesInterface<Employee> employeeService
+
+@inject IGenericServicesInterface<Doctor> doctorService
+
+@inject IGenericServicesInterface<Sanction> sanctionService
+@inject IGenericServicesInterface<SanctionType> sanctionTypeService
+
+@inject IGenericServicesInterface<Overtime> overtimeService
+@inject IGenericServicesInterface<OvertimeType> overtimeTypeService
+
+@inject IGenericServicesInterface<Vacation> vacationService
+@inject IGenericServicesInterface<VacationType> vacationTypeService

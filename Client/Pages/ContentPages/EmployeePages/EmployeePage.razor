@@ -79,6 +79,8 @@ HandleDetailsPageCloseBtnClicked="HandleDetailsPageCloseBtnClicked" />
                 HandleAddOvertimeClicked="AddOvertimeClicked"
                 HandleAddSanctionClicked="AddSanctionClicked"/>*@
 
+<DoctorDialog @ref="doctorDialog" Doctor="Doctor" HandleSaveOperationEvent="SaveHealthEvent" />
+
 @code {
     AddOrUpdateEmployeePage? addOrUpdateEmployee;
     public Employee Employee { get; set; } = new();
@@ -154,6 +156,7 @@ HandleDetailsPageCloseBtnClicked="HandleDetailsPageCloseBtnClicked" />
         ShowMainPage = true;
         ShowAddOrUpdatePage = false;
         await LoadEmployees();
+        SelectedEmployee = new();
     }
 
     ContextMenu? contextMenu;
@@ -211,6 +214,24 @@ HandleDetailsPageCloseBtnClicked="HandleDetailsPageCloseBtnClicked" />
         ShowDetailsPage = true;
         ShowMainPage = false;
         SelectedEmployee = new();
+    }
+
+    DoctorDialog? doctorDialog;
+    private void AddHealthClicked() {
+        Doctor.EmployeeId = SelectedEmployee.Id;
+        contextMenu!.CloseContextMenu();
+        doctorDialog!.OpenDialog();
+    }
+
+    async Task SaveHealtHandler(Doctor item) {
+        item.EmployeeId = SelectedEmployee.Id;
+        var (flag, message) = await doctorService.Insert(item, Constants.DoctorBaseUrl);
+        var response = await DisplayMessage(flag, message);
+        if (response) {
+            SelectedEmployee = new();
+            Doctor = new();
+            doctorDialog!.CloseDialog();
+        }
     }
 
     void HandleDetailsPageCloseBtnClicked() {

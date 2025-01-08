@@ -5,7 +5,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="float-start">Sanction Types</h4>
+                        <h4 class="float-start">Vacation Types</h4>
                         <button class="btn btn-outline-success float-end" @onclick="OpenDialog">
                             <i class="bi bi-plus-circle-dotted"></i> Add Type
                         </button>
@@ -61,13 +61,13 @@
     }
 </style>
 
-<SanctionTypeDialog @ref="sanctionTypeDialog" HandleSaveOperationEvent="HandleSaveOperationEvent" SanctionType="SanctionType" />
+<VacationTypeDialog @ref="vacationTypeDialog" HandleSaveOperationEvent="HandleSaveOperationEvent" VacationType="VacationType" />
 
 @code {
-    SanctionTypeDialog? sanctionTypeDialog;
-    SanctionType SanctionType = new();
+    VacationTypeDialog? vacationTypeDialog;
+    VacationType VacationType = new();
     public string Title { get; set; } = "Add";
-    public List<SanctionType> Types { get; set; } = new();
+    public List<VacationType> Types { get; set; } = new();
 
     protected async override Task OnInitializedAsync()
     {
@@ -75,45 +75,45 @@
         allState.Action += StateHasChanged;
     }
 
-    private async Task GetTypes() => Types = await sanctionTypeService.GetAll(Constants.SanctionTypeBaseUrl);
+    private async Task GetTypes() => Types = await vacationTypeService.GetAll(Constants.VacationTypeBaseUrl);
 
-    void OpenDialog() => sanctionTypeDialog?.OpenDialog();
+    void OpenDialog() => vacationTypeDialog?.OpenDialog();
 
-    private async Task HandleSaveOperationEvent(SanctionType item)
+    private async Task HandleSaveOperationEvent(VacationType item)
     {
         bool successCheck = false;
         if (item.Id > 0)
         {
-            var result = await sanctionTypeService.Update(item, Constants.SanctionTypeBaseUrl);
+            var result = await vacationTypeService.Update(item, Constants.VacationTypeBaseUrl);
             successCheck = await DisplayMessage(result.Flag, result.Message);
         }
         else
         {
-            var response = await sanctionTypeService.Insert(item, Constants.SanctionTypeBaseUrl);
+            var response = await vacationTypeService.Insert(item, Constants.VacationTypeBaseUrl);
             successCheck = await DisplayMessage(response.Flag, response.Message);
         }
 
         if (successCheck)
         {
-            SanctionType = new();
+            VacationType = new();
             await GetTypes();
-            sanctionTypeDialog?.ChangeTitle("Add");
+            vacationTypeDialog?.ChangeTitle("Add");
         }
     }
 
-    private void EditClicked(SanctionType item)
+    private void EditClicked(VacationType item)
     {
-        sanctionTypeDialog?.ChangeTitle("Update");
-        SanctionType = item;
+        vacationTypeDialog?.ChangeTitle("Update");
+        VacationType = item;
         OpenDialog();
     }
 
-    private async Task DeleteClicked(SanctionType item)
+    private async Task DeleteClicked(VacationType item)
     {
         bool confirm = await dialogService.ConfirmAsync($"Are you sure you wanna delete {item.Name}?", "Confirm Delete");
         if (!confirm) return;
 
-        var response = await sanctionTypeService.DeleteById(item.Id, Constants.SanctionTypeBaseUrl);
+        var response = await vacationTypeService.DeleteById(item.Id, Constants.VacationTypeBaseUrl);
         if (await DisplayMessage(response.Flag, response.Message))
         {
             await GetTypes();

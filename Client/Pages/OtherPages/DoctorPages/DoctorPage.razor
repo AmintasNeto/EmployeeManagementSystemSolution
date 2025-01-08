@@ -52,7 +52,7 @@
     DoctorDialog? doctorDialog;
     Doctor Doctor = new();
     public List<Doctor> Doctors { get; set; } = new();
-    protected async override Task OnInializedAsync() {
+    protected async override Task OnInitializedAsync() {
         await GetHealth();
         allState.Action += StateHasChanged;
     }

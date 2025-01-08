@@ -8,7 +8,7 @@ namespace BaseLibrary.Entities
         [Required]
         public DateTime Date { get; set; }
         [Required]
-        public string Pubishment { get; set; } = string.Empty;
+        public string Punishment { get; set; } = string.Empty;
         [Required]
         public DateTime PunishmentDate { get; set; }
 

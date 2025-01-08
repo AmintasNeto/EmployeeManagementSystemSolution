@@ -37,7 +37,7 @@ namespace ServerLibrary.Repositories.Implementations
             var obj = await appDbContext.Sanctions.FirstOrDefaultAsync(eid => eid.EmployeeId == item.EmployeeId);
             if (obj is null) return NotFound();
 
-            obj.Pubishment = item.Pubishment;
+            obj.Punishment = item.Punishment;
             obj.PunishmentDate = item.PunishmentDate;
             obj.Date = item.Date;
             obj.SanctionType = item.SanctionType;

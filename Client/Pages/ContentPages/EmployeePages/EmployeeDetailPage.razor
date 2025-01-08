@@ -77,6 +77,6 @@
     [Parameter] public bool ShowDetailsPage { get; set; }
     [Parameter] public Employee EmployeeDetails { get; set; } = new();
 
-    [Parameter] public EventCallback HandleDetailsPageCloseBtnClicked { get; set; };
+    [Parameter] public EventCallback HandleDetailsPageCloseBtnClicked { get; set; }
     async Task DetailsPageCloseBtnClicked() => await HandleDetailsPageCloseBtnClicked.InvokeAsync();
 }

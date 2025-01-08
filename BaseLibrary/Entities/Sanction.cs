@@ -14,5 +14,7 @@ namespace BaseLibrary.Entities
 
         // Relationship: Many to One
         public SanctionType? SanctionType { get; set; }
+        [Required]
+        public int SanctionTypeId { get; set; }
     }
 }

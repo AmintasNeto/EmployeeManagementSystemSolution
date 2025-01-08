@@ -106,6 +106,9 @@ HandleAddSanctionClicked="AddSanctionClicked"/>
         allState.Action += StateHasChanged;
         await LoadEmployees();
         await LoadDefaults();
+        await GetOvertimeTypes();
+        await GetSanctionTypes();
+        await GetVacationTypes();
     }
 
     private async Task LoadDefaults() {
@@ -218,6 +221,10 @@ HandleAddSanctionClicked="AddSanctionClicked"/>
         ShowMainPage = false;
         SelectedEmployee = new();
     }
+
+    private async Task GetOvertimeTypes() => OvertimeTypes = await overtimeTypeService.GetAll(Constants.OvertimeTypeBaseUrl);
+    private async Task GetSanctionTypes() => SanctionTypes = await sanctionTypeService.GetAll(Constants.SanctionTypeBaseUrl);
+    private async Task GetVacationTypes() => VacationTypes = await vacationTypeService.GetAll(Constants.VacationTypeBaseUrl);
 
     DoctorDialog? doctorDialog;
     Doctor Doctor = new();

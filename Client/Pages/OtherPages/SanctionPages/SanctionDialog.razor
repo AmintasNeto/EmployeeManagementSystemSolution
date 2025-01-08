@@ -56,7 +56,7 @@
     private bool IsVisible { get; set; } = false;
     private async void Save()
     {
-        if (ItemModel.SanctionTypeId <= 0) await dialogService.AlertAsync("You need to provide a overtime type.", "Alert!");
+        if (ItemModel.SanctionTypeId <= 0) await dialogService.AlertAsync("You need to provide a sanction type.", "Alert!");
         else await HandleSaveOperationEvent.InvokeAsync(ItemModel);
     }
 

@@ -24,10 +24,4 @@
     <ProjectReference Include="..\ClientLibrary\ClientLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\OtherPages\OvertimePages\" />
-    <Folder Include="Pages\OtherPages\SanctionPages\" />
-    <Folder Include="Pages\OtherPages\VacationPages\" />
-  </ItemGroup>
-
 </Project>

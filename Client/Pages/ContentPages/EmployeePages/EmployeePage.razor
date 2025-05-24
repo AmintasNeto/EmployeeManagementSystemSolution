@@ -12,7 +12,7 @@
                         </div>
                         <div class="card-body">
                             @{
-                                var Tool = (new List<string>() { "Search", "ExcelExport", "PdfExport", "Search" });
+                                var Tool = (new List<string>() { "Search", "ExcelExport", "PdfExport" });
                             }
                             <SfGrid DataSource="@Employees" AllowPaging="true" AllowSorting="true" Toolbar="@Tool" AllowExcelExport="true" AllowPdfExport="true" @ref="DefaultGrid">
                                 <GridColumns>
